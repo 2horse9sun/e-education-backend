@@ -3,16 +3,16 @@ const router = express.Router();
 const S3Controller = require('../controllers/S3Controller');
 
 
-router.get('/signedGetObjectUrl', (req, res, next) => S3Controller.signedGetObjectUrl(req, res, next));
-router.get('/getObject', (req, res, next) => S3Controller.getObject(req, res, next));
-router.get('/getObjectBySignedUrl', (req, res, next) => S3Controller.getObjectBySignedUrl(req, res, next));
+router.get('/signedGetObjectUrl', S3Controller.signedGetObjectUrl);
+router.get('/getObject', S3Controller.getObject);
+router.get('/getObjectBySignedUrl', S3Controller.getObjectBySignedUrl);
 
-router.get('/signedPutObjectUrl', (req, res, next) => S3Controller.signedPutObjectUrl(req, res, next));
-router.get('/putObject', (req, res, next) => S3Controller.putObject(req, res, next));
-router.get('/putObjectBySignedUrl', (req, res, next) => S3Controller.putObjectBySignedUrl(req, res, next));
+router.get('/signedPutObjectUrl', S3Controller.signedPutObjectUrl);
+router.get('/putObject', S3Controller.putObject);
+router.get('/putObjectBySignedUrl', S3Controller.putObjectBySignedUrl);
 
-router.get('/signedDeleteObjectUrl', (req, res, next) => S3Controller.signedDeleteObjectUrl(req, res, next));
-router.get('/deleteObject', (req, res, next) => S3Controller.deleteObject(req, res, next));
-router.get('/deleteObjectBySignedUrl', (req, res, next) => S3Controller.deleteObjectBySignedUrl(req, res, next));
+router.get('/signedDeleteObjectUrl', S3Controller.signedDeleteObjectUrl);
+router.get('/deleteObject', S3Controller.deleteObject);
+router.get('/deleteObjectBySignedUrl', S3Controller.deleteObjectBySignedUrl);
 
 module.exports = router;
