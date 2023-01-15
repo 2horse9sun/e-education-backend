@@ -13,10 +13,12 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
 const TagRouter = require('./routes/TagRouter');
+const LessonRouter = require('./routes/LessonRouter');
 const UserRouter = require('./routes/UserRouter');
 const S3Router = require('./routes/S3Router');
 const PREFIX = "/api";
 app.use(`${PREFIX}/tag`, TagRouter);
+app.use(`${PREFIX}/lesson`, LessonRouter);
 app.use(`${PREFIX}/user`, UserRouter);
 app.use(`${PREFIX}/s3`, S3Router);
 
