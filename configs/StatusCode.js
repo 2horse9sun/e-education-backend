@@ -6,6 +6,7 @@ const STATUS_CODE = {
     DB_RECORD_NOT_EXIST: -120,
     S3_ERROR: -200,
 
+    ACCESS_DENIED: -700,
     NOT_LOGIN: -800,
     WRONG_PASSWORD: -900
 };
