@@ -5,8 +5,8 @@ const getAllTags = async () => {
     const statement = `
     SELECT * FROM tag
     `;
-    const allTagsRes = await poolQuery(statement);
-    return allTagsRes;
+    const result = await poolQuery(statement);
+    return result;
 };
 
 
@@ -16,8 +16,8 @@ const putTag = async (tagName) => {
     VALUES(?)
     `;
     const params = [tagName];
-    const putTagRes = await poolQuery(statement, params);
-    return putTagRes;
+    const result = await poolQuery(statement, params);
+    return result;
 };
 
 
@@ -28,8 +28,8 @@ const updateTagByName = async (oldTagName, newTagName) => {
     WHERE name=?
     `;
     const params = [newTagName, oldTagName];
-    const updateTagByNameRes = await poolQuery(statement, params);
-    return updateTagByNameRes;
+    const result = await poolQuery(statement, params);
+    return result;
 };
 
 
@@ -39,8 +39,8 @@ const deleteTagByName = async (tagName) => {
     WHERE name=?
     `;
     const params = [tagName];
-    const deleteTagRes = await poolQuery(statement, params);
-    return deleteTagRes;
+    const result = await poolQuery(statement, params);
+    return result;
 };
 
 module.exports = {
