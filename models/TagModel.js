@@ -24,8 +24,8 @@ const putTag = async (tagName) => {
 const updateTagByName = async (oldTagName, newTagName) => {
     const statement = `
     UPDATE tag
-    SET name=?
-    WHERE name=?
+    SET name = ?
+    WHERE name = ?
     `;
     const params = [newTagName, oldTagName];
     const result = await poolQuery(statement, params);
@@ -36,7 +36,7 @@ const updateTagByName = async (oldTagName, newTagName) => {
 const deleteTagByName = async (tagName) => {
     const statement = `
     DELETE FROM tag
-    WHERE name=?
+    WHERE name = ?
     `;
     const params = [tagName];
     const result = await poolQuery(statement, params);

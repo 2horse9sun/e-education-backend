@@ -7,7 +7,7 @@ router.get('/getAllTags', TagController.getAllTags);
 
 router.put('/putTag', TagController.putTag);
 
-router.post('/updateTagByName', TagController.updateTagByName);
+router.put('/updateTagByName', TagController.updateTagByName);
 
 router.delete('/deleteTagByName', TagController.deleteTagByName);
 

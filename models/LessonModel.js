@@ -3,7 +3,7 @@ const {poolQuery} = require('../databases/MySQLFunction');
 
 const getAllLessonsByCourseId = async (courseId) => {
     const statement = `
-    SELECT lesson.*, section.id AS section_id, section.name AS section_name FROM course
+    SELECT lesson.*, section.id AS section_id, section.name AS section_name, section.priority AS section_priority FROM course
     LEFT OUTER JOIN section
     ON section.course_id = course.id
     LEFT OUTER JOIN lesson
@@ -18,7 +18,8 @@ const getAllLessonsByCourseId = async (courseId) => {
 
 const getAllMyLessonsByCourseId = async (courseId, userId) => {
     const statement = `
-    SELECT lesson.*, section.id AS section_id, section.name AS section_name, lesson_progress.progress AS lesson_progress FROM course
+    SELECT lesson.*, section.id AS section_id, section.name AS section_name, 
+    section.priority AS section_priority, lesson_progress.progress AS lesson_progress FROM course
     LEFT OUTER JOIN section
     ON section.course_id = course.id
     LEFT OUTER JOIN lesson

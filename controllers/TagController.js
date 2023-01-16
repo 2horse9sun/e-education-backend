@@ -23,7 +23,7 @@ const updateTagByName = async (req, res, next) => {
 
 
 const deleteTagByName = async (req, res, next) => {
-    const {name} = req.body;
+    const {name} = req.query;
     const result = await TagModel.deleteTagByName(name);
     return res.json(result);
 };
