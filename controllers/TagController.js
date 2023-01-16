@@ -8,29 +8,29 @@ const getAllTags = async (req, res, next) => {
 };
 
 
-const putTag = async (req, res, next) => {
-    const {name} = req.body;
-    const result = await TagModel.putTag(name);
+const addTag = async (req, res, next) => {
+    const {tagName} = req.body;
+    const result = await TagModel.addTag(tagName);
     return res.json(result);
 };
 
 
-const updateTagByName = async (req, res, next) => {
-    const {oldTagName, newTagName} = req.body;
-    const result = await TagModel.updateTagByName(oldTagName, newTagName);
+const updateTagById = async (req, res, next) => {
+    const {tagId, tagName} = req.body;
+    const result = await TagModel.updateTagById(tagId, tagName);
     return res.json(result);
 };
 
 
-const deleteTagByName = async (req, res, next) => {
-    const {name} = req.query;
-    const result = await TagModel.deleteTagByName(name);
+const deleteTagById = async (req, res, next) => {
+    const {tagId} = req.query;
+    const result = await TagModel.deleteTagById(tagId);
     return res.json(result);
 };
 
 module.exports = {
     getAllTags,
-    putTag,
-    updateTagByName,
-    deleteTagByName
+    addTag,
+    updateTagById,
+    deleteTagById
 };

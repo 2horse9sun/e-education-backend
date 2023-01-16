@@ -138,6 +138,7 @@ const getMyReviewList = async (userId, offset, limit, ratingEqualTo, orderByRati
         SELECT review.id AS review_id, COUNT(*) AS like_count FROM review
         JOIN like_review
         ON like_review.review_id = review.id
+        WHERE review.user_id = ? 
     ) AS review_like_count
     ON review_like_count.review_id = review.id
     LEFT OUTER JOIN
@@ -149,7 +150,7 @@ const getMyReviewList = async (userId, offset, limit, ratingEqualTo, orderByRati
     WHERE review.user_id = ? 
     `;
 
-    let params = [userId, userId];
+    let params = [userId, userId, userId];
     
 
     if(ratingEqualTo !== undefined && ratingEqualTo !== "undefined"){
