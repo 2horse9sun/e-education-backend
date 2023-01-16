@@ -5,11 +5,11 @@ const TagController = require('../controllers/TagController');
 
 router.get('/getAllTags', TagController.getAllTags);
 
-router.put('/putTag', TagController.putTag);
+router.put('/addTag', TagController.addTag);
 
-router.put('/updateTagByName', TagController.updateTagByName);
+router.put('/updateTagById', TagController.updateTagById);
 
-router.delete('/deleteTagByName', TagController.deleteTagByName);
+router.delete('/deleteTagById', TagController.deleteTagById);
 
 
 module.exports = router;
