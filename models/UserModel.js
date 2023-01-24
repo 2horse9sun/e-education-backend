@@ -15,6 +15,18 @@ const getUserAccountInfoByEmail = async (email) => {
 };
 
 
+const getUserAccountInfoById = async (userId) => {
+    const statement = `
+    SELECT id, email, salt, password FROM user
+    WHERE 
+    id = ?
+    `;
+    const params = [userId];
+    const result = await poolQuery(statement, params);
+    return result;
+};
+
+
 const getUserProfileInfoById = async (userId) => {
     const statement = `
     SELECT id, email, first_name, last_name, nickname, avatar_url, date_of_birth, phone_number, gender FROM user
@@ -22,6 +34,64 @@ const getUserProfileInfoById = async (userId) => {
     id = ?
     `;
     const params = [userId];
+    const result = await poolQuery(statement, params);
+    return result;
+};
+
+
+const getMentorList = async (offset, limit) => {
+    let statement = `
+    SELECT id, avatar_url, nickname, first_name, last_name, gender FROM user
+    WHERE role = 'mentor'
+    `;
+
+    let params = [];
+
+    statement += " LIMIT ?, ?";
+    params.push(offset);
+    params.push(limit);
+    
+    const result = await poolQuery(statement, params);
+    return result;
+};
+
+
+const getMentorProfileInfoById = async (mentorId) => {
+    const statement = `
+    SELECT id, email, first_name, last_name, nickname, avatar_url, date_of_birth, phone_number, gender FROM user
+    WHERE
+    id = ? AND role = 'mentor'
+    `;
+    const params = [mentorId];
+    const result = await poolQuery(statement, params);
+    return result;
+};
+
+
+const getStudentListByMentorId = async (mentorId, offset, limit) => {
+    let statement = `
+    SELECT 
+    DISTINCT student.id AS student_id, 
+    student.nickname AS student_nickname,
+    student.avatar_url AS student_avatar_url,
+    student.first_name AS student_first_name,
+    student.last_name AS student_last_name
+    FROM user AS mentor
+    LEFT OUTER JOIN teach
+    ON teach.user_id = mentor.id
+    LEFT OUTER JOIN enrollment
+    ON enrollment.course_id = teach.course_id
+    LEFT OUTER JOIN user AS student
+    ON student.id = enrollment.user_id
+    WHERE
+    mentor.role = 'mentor' AND student.role = 'student' AND mentor.id = ?
+    `;
+    let params = [mentorId];
+
+    statement += " LIMIT ?, ?";
+    params.push(offset);
+    params.push(limit);
+
     const result = await poolQuery(statement, params);
     return result;
 };
@@ -48,6 +118,19 @@ const updateUserAvatarById = async (userId, avatarUrl) => {
     id = ?
     `;
     const params = [avatarUrl, userId];
+    const result = await poolQuery(statement, params);
+    return result;
+};
+
+
+const updateMyPassword = async (userId, salt, password) => {
+    const statement = `
+    UPDATE user
+    SET salt = ?, password = ?
+    WHERE
+    id = ?
+    `;
+    const params = [salt, password, userId];
     const result = await poolQuery(statement, params);
     return result;
 };
@@ -102,8 +185,13 @@ const userRegister = async (email, salt, password) => {
 
 module.exports = {
     getUserAccountInfoByEmail,
+    getUserAccountInfoById,
     getUserProfileInfoById,
+    getMentorList,
+    getMentorProfileInfoById,
+    getStudentListByMentorId,
     updateUserProfileInfoById,
     updateUserAvatarById,
+    updateMyPassword,
     userRegister,
 };

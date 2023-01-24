@@ -23,7 +23,7 @@ const checkIfEmailExists = async (req, res, next) => {
 
 
 const getUserProfileInfoById = async (req, res, next) => {
-    const {userId} = req.body;
+    const {userId} = req.query;
     const result = await UserModel.getUserProfileInfoById(userId);
     return res.json(result);
 };
@@ -32,6 +32,31 @@ const getUserProfileInfoById = async (req, res, next) => {
 const getMyUserProfileInfo = async (req, res, next) => {
     const {userId} = req.userAccountInfo;
     const result = await UserModel.getUserProfileInfoById(userId);
+    return res.json(result);
+};
+
+
+const getMentorList = async (req, res, next) => {
+    let {pageNumber, pageSize} = req.query;
+    pageNumber = parseInt(pageNumber);
+    pageSize = parseInt(pageSize);
+    const result = await UserModel.getMentorList(pageNumber*pageSize, pageSize);
+    return res.json(result);
+};
+
+
+const getMentorProfileInfoById = async (req, res, next) => {
+    const {mentorId} = req.query;
+    const result = await UserModel.getMentorProfileInfoById(mentorId);
+    return res.json(result);
+};
+
+
+const getStudentListByMentorId = async (req, res, next) => {
+    let {mentorId, pageNumber, pageSize} = req.query;
+    pageNumber = parseInt(pageNumber);
+    pageSize = parseInt(pageSize);
+    const result = await UserModel.getStudentListByMentorId(mentorId, pageNumber*pageSize, pageSize);
     return res.json(result);
 };
 
@@ -63,6 +88,33 @@ const updateMyUserAvatar = async (req, res, next) => {
     const {avatarUrl} = req.body;
     const result = await UserModel.updateUserAvatarById(userId, avatarUrl);
     return res.json(result);
+};
+
+
+const updateMyPassword = async (req, res, next) => {
+    const {userId} = req.userAccountInfo;
+    const {oldPassword, newPassword} = req.body;
+    let result = await UserModel.getUserAccountInfoById(userId);
+        if(result.statusCode !== 0){
+            return result;
+        } 
+        if(result.data.length === 0){
+            return res.json(new ErrorResponse("User does not exist", STATUS_CODE.DB_RECORD_NOT_EXIST));
+        }
+        const accountInfo = result.data[0];
+    
+        let salt = accountInfo.salt;
+        const realPasswordHash = accountInfo.password;
+        const passwordHashToBeChecked = generatePasswordHash(oldPassword, salt);
+        if(realPasswordHash === passwordHashToBeChecked){
+            salt = generateRandomSalt();
+            const passwordHash = generatePasswordHash(newPassword, salt);
+            result = await UserModel.updateMyPassword(userId, salt, passwordHash);
+            return res.json(result);
+        }else {
+            return res.json(new ErrorResponse("Wrong password", STATUS_CODE.WRONG_PASSWORD))
+        }
+
 };
 
 
@@ -136,10 +188,14 @@ module.exports = {
     checkIfEmailExists,
     getUserProfileInfoById,
     getMyUserProfileInfo,
+    getMentorList,
+    getMentorProfileInfoById,
+    getStudentListByMentorId,
     updateUserProfileInfoById,
     updateMyUserProfileInfo,
     updateUserAvatarById,
     updateMyUserAvatar,
+    updateMyPassword,
     userRegister,
     userLogin
 };
