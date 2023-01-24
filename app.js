@@ -20,6 +20,7 @@ const ReviewRouter = require('./routes/ReviewRouter');
 const UserRouter = require('./routes/UserRouter');
 const S3Router = require('./routes/S3Router');
 const BannerRouter = require('./routes/BannerRouter');
+const BookmarkRouter = require('./routes/BookmarkRouter');
 const PREFIX = "/api";
 app.use(`${PREFIX}/tag`, TagRouter);
 app.use(`${PREFIX}/course`, CourseRouter);
@@ -29,6 +30,7 @@ app.use(`${PREFIX}/review`, ReviewRouter);
 app.use(`${PREFIX}/user`, UserRouter);
 app.use(`${PREFIX}/s3`, S3Router);
 app.use(`${PREFIX}/banner`, BannerRouter);
+app.use(`${PREFIX}/bookmark`, BookmarkRouter);
 
 
 module.exports = app;
