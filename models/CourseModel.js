@@ -61,10 +61,14 @@ const getCourseList = async (userId, offset, limit, tagNameContains, orderByRati
         statement += " ORDER BY course_avg_rating DESC";
     }else if(orderByRating === "ASC"){
         statement += " ORDER BY course_avg_rating ASC";
+    }else if(orderByEnrollmentCount === "DESC"){
+        statement += " ORDER BY enrollment_count DESC";
+    }else if(orderByEnrollmentCount === "ASC"){
+        statement += " ORDER BY enrollment_count ASC";
     }else if(orderByCurrentPrice === "DESC"){
-        statement += " ORDER BY course_avg_rating DESC";
+        statement += " ORDER BY course_current_price DESC";
     }else if(orderByCurrentPrice === "ASC"){
-        statement += " ORDER BY course_avg_rating ASC";
+        statement += " ORDER BY course_current_price ASC";
     } else {
         statement += " ORDER BY course_name";
     }

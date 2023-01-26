@@ -22,6 +22,7 @@ const S3Router = require('./routes/S3Router');
 const BannerRouter = require('./routes/BannerRouter');
 const BookmarkRouter = require('./routes/BookmarkRouter');
 const EnrollmentRouter = require('./routes/enrollmentRouter');
+const RecommendationRouter = require('./routes/recommendationRouter');
 const PREFIX = "/api";
 app.use(`${PREFIX}/tag`, TagRouter);
 app.use(`${PREFIX}/course`, CourseRouter);
@@ -33,6 +34,7 @@ app.use(`${PREFIX}/s3`, S3Router);
 app.use(`${PREFIX}/banner`, BannerRouter);
 app.use(`${PREFIX}/bookmark`, BookmarkRouter);
 app.use(`${PREFIX}/enrollment`, EnrollmentRouter);
+app.use(`${PREFIX}/recommendation`, RecommendationRouter);
 
 
 module.exports = app;
